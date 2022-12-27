@@ -1,9 +1,10 @@
+const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
-
 const ctx = canvas.getContext("2d"); //ctx=context
 canvas.width = 800;
 canvas.height = 800;
-ctx.lineWidth = 2;
+ctx.lineWidth = lineWidth.value;
+let isPainting = false;
 
 // 사각형 그리기 예시 1
 // 사각형을 그리려면 기본적인 단계들을 하나씩 거쳐야 함
@@ -96,8 +97,6 @@ ctx.lineWidth = 2;
 
 // canvas.addEventListener("mousemove", onClick);
 
-let isPainting = false;
-
 function onMove(event) {
   if (isPainting) {
     //==isPainting : line그림
@@ -114,8 +113,15 @@ function startPainting() {
 
 function cancelPainting() {
   isPainting = false;
+  ctx.beginPath();
+}
+
+function onLineWidthChange(event) {
+  ctx.lineWidth = event.target.value;
 }
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
+
+lineWidth.addEventListener("change", onLineWidthChange);
